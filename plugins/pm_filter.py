@@ -127,7 +127,7 @@ async def next_page(bot, query):
 
         btn.insert(0, 
             [
-                InlineKeyboardButton("🪪ʟᴀɴɢᴜᴀɢᴇs🪪", callback_data=f"languages#{key}"),
+                InlineKeyboardButton("🗣️ʟᴀɴɢᴜᴀɢᴇs🗣️", callback_data=f"languages#{key}"),
                 InlineKeyboardButton("📍Sᴇᴀsᴏɴs📍",  callback_data=f"seasons#{key}")
             ]
         )
@@ -139,7 +139,7 @@ async def next_page(bot, query):
         btn = []
         btn.insert(0, 
             [
-                InlineKeyboardButton("🪪ʟᴀɴɢᴜᴀɢᴇs🪪", callback_data=f"languages#{key}"),
+                InlineKeyboardButton("🗣️ʟᴀɴɢᴜᴀɢᴇs🗣️", callback_data=f"languages#{key}"),
                 InlineKeyboardButton("📍Sᴇᴀsᴏɴs📍",  callback_data=f"seasons#{key}")
             ]
         )
@@ -2105,7 +2105,7 @@ async def auto_filter(client, msg, spoll=False):
         btn.insert(0, 
             [
                 
-                InlineKeyboardButton("🪪ʟᴀɴɢᴜᴀɢᴇs🪪", callback_data=f"languages#{key}"),
+                InlineKeyboardButton("🗣️ʟᴀɴɢᴜᴀɢᴇs🗣️", callback_data=f"languages#{key}"),
                 InlineKeyboardButton("📍Sᴇᴀsᴏɴs📍", callback_data=f"seasons#{key}")
             ]
         )
@@ -2118,7 +2118,7 @@ async def auto_filter(client, msg, spoll=False):
         btn.insert(0, 
             [
                 
-                InlineKeyboardButton("🪪ʟᴀɴɢᴜᴀɢᴇs🪪", callback_data=f"languages#{key}"),
+                InlineKeyboardButton("🗣️ʟᴀɴɢᴜᴀɢᴇs🗣️", callback_data=f"languages#{key}"),
                 InlineKeyboardButton("📍Sᴇᴀsᴏɴs📍", callback_data=f"seasons#{key}")
             ]
         )
