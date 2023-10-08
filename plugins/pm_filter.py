@@ -237,10 +237,20 @@ async def advantage_spoll_choker(bot, query):
     movies = SPELL_CHECK.get(query.message.reply_to_message.id)
     if not movies:
         return await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name), show_alert=True)
+    else:      
+        await query.answer(f"⚠️⚠️⚠️", show_alert=True)
+
+    
     if int(user) != 0 and query.from_user.id != int(user):
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
+
+    
     if movie_ == "close_spellcheck":
         return await query.message.delete()
+    await query.answer(f"⏳️𝐇𝐞𝐥𝐥𝐨 {query.from_user.first_name}, 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞...⏳️", show_alert=True)   
+    movie = movies[(int(movie_))]    
+    await query.answer(script.TOP_ALRT_MSG)
+    
     movie = movies[(int(movie_))]
     movie = re.sub(r"[:\-]", " ", movie)
     movie = re.sub(r"\s+", " ", movie).strip()
@@ -1120,6 +1130,109 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 parse_mode=enums.ParseMode.HTML,
                 reply_to_message_id=query.message.id
             )
+    elif query.data.startswith("option"):
+        ident, from_user = query.data.split("#")
+        btn = [[
+            InlineKeyboardButton("⚠️𝐔𝐧𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞⚠️", callback_data=f"un#{from_user}"),
+            InlineKeyboardButton("✔️𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝✔️", callback_data=f"up#{from_user}")
+        ],[
+            InlineKeyboardButton("📥𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞📥", callback_data=f"alr#{from_user}")
+        ],[
+            InlineKeyboardButton("⏳️𝐕𝐢𝐞𝐰 𝐒𝐭𝐚𝐭𝐮𝐬⏳️", url=f"{query.message.link}")
+        ]]
+        if query.from_user.id in ADMINS:
+            user = await client.get_users(from_user)
+            reply_markup = InlineKeyboardMarkup(btn)
+            await query.message.edit_reply_markup(reply_markup)
+            await query.answer("𝐕𝐢𝐞𝐰 𝐔𝐩𝐝𝐚𝐭𝐞")
+        else:
+            await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
+
+    elif query.data.startswith("up"):
+        ident, from_user = query.data.split("#")
+        
+        btn = [[            
+            InlineKeyboardButton("✔️𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝✔️", callback_data=f"check_delete")        
+        ]]
+        if query.from_user.id in ADMINS:
+            user = await client.get_users(from_user)
+            reply_markup = InlineKeyboardMarkup(btn)
+            buttons = [[                        
+                InlineKeyboardButton('❌️𝐃𝐞𝐥𝐞𝐭𝐞❌️', callback_data=f'check_delete')
+            ]]
+            reply_markup = InlineKeyboardMarkup(buttons)
+            k = await query.message.edit_text(f"<b><strike>✔️𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝✔️</strike></b>",
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML)
+            await asyncio.sleep(300)
+            await k.delete()
+            await query.answer(f"✔️𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝✔️", show_alert=True)
+            await query.answer("✔️𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝✔️")
+        else:
+            await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
+
+    elif query.data.startswith("un"):
+        ident, from_user = query.data.split("#")
+        btn = [[            
+            InlineKeyboardButton("⚠️𝐔𝐧𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞⚠️", callback_data=f"check_delete")        
+        ]]
+        if query.from_user.id in ADMINS:            
+               
+            user = await client.get_users(from_user)
+            reply_markup = InlineKeyboardMarkup(btn)
+            buttons = [[                        
+                InlineKeyboardButton('❌️𝐃𝐞𝐥𝐞𝐭𝐞❌️', callback_data=f'check_delete')
+            ]]
+            reply_markup = InlineKeyboardMarkup(buttons)
+            k = await query.message.edit_text(f"<b><strike>⚠️𝐔𝐧𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞⚠️</strike></b>",
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML)
+            await asyncio.sleep(300)
+            await k.delete()
+            await query.answer(f"⚠️𝐔𝐧𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞⚠️", show_alert=True)
+            await query.answer("⚠️𝐔𝐧𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞⚠️")
+        else:
+            await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
+
+
+    elif query.data.startswith("alr"):
+        ident, from_user = query.data.split("#")
+        btn = [[            
+            InlineKeyboardButton("📥𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞📥", callback_data=f"check_delete")        
+        ]]
+        if query.from_user.id in ADMINS:
+            user = await client.get_users(from_user)
+            reply_markup = InlineKeyboardMarkup(btn)
+            buttons = [[                        
+                InlineKeyboardButton('❌️𝐃𝐞𝐥𝐞𝐭𝐞❌️', callback_data=f'check_delete')
+            ]]
+            reply_markup = InlineKeyboardMarkup(buttons)
+            k = await query.message.edit_text(f"<b><strike>📥𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞📥</strike></b>",
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML)
+            await asyncio.sleep(300)
+            await k.delete()
+            await query.answer(f"📥𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞📥", show_alert=True)
+            await query.answer("📥𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞📥")
+        else:
+            await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
+
+
+
+
+    elif query.data.startswith("close_data"):
+        userid = query.message.reply_to_message.from_user.id
+        if int(query.from_user.id) not in [query.from_user.id, 0]:
+            await query.answer("𝐂𝐥𝐨𝐬𝐞𝐝", show_alert=True)                     
+            await query.message.delete()
+            await query.message.reply_to_message.delete()            
+        else:
+            await query.answer("𝐂𝐥𝐨𝐬𝐞𝐝", show_alert=True)
+            await query.message.delete()
+            await query.message.reply_to_message.delete()
+#        return await query.answer("𝐂𝐥𝐨𝐬𝐞𝐝", show_alert=True) 
+
+    
 
     elif query.data.startswith("show_option"):
         ident, from_user = query.data.split("#")
