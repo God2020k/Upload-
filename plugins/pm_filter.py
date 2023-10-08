@@ -2514,12 +2514,29 @@ async def advantage_spell_chok(client, msg):
             ]
             for k, movie_name in enumerate(movielist)
         ]
-        btn.append([InlineKeyboardButton(text="Close", callback_data=f'spol#{reqstr1}#close_spellcheck')])
-        spell_check_del = await msg.reply_photo(
-            photo=(SPELL_IMG),
-            caption=(script.CUDNT_FND.format(mv_rqst)),
-            reply_markup=InlineKeyboardMarkup(btn)
-        )
+        btn.append([InlineKeyboardButton(text=f"⚠️𝐂𝐥𝐨𝐬𝐞 𝐒𝐞𝐚𝐫𝐜𝐡⚠️", callback_data="close_data")])
+
+#    btn.append([f"⚠️𝐂𝐥𝐨𝐬𝐞 𝐒𝐞𝐚𝐫𝐜𝐡⚠️", callback_data="close_data", False])        
+    btn.insert(0, [
+        InlineKeyboardButton("𝐌𝐨𝐯𝐢𝐞𝐬 𝐆𝐫𝐨𝐮𝐩", url="https://t.me/NasraniSeries"),
+        InlineKeyboardButton("𝐔𝐩𝐝𝐚𝐭𝐞 𝐂𝐡𝐚𝐧𝐧𝐞𝐥", url="https://t.me/bigmoviesworld")
+    ])
+
+#    btn.insert(5, [
+#        InlineKeyboardButton(f"⚠️𝐂𝐥𝐨𝐬𝐞 𝐒𝐞𝐚𝐫𝐜𝐡⚠️", callback_data="close_data")
+#    ])
+    
+      
+
+    spell_check_del = await msg.reply_photo(
+        photo=imdb.get('poster'),
+        caption=(script.CUDNT_FND.format(mv_rqst)),
+        reply_markup=InlineKeyboardMarkup(btn))
+    awaicaption=(script.CUDNT_FND.format(mv_rqst))
+    await asyncio.sleep(60)
+    await spell_check_del.delete()
+    await msg.delete()
+        
         try:
             if settings['auto_delete']:
                 await asyncio.sleep(600)
