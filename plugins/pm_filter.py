@@ -238,7 +238,7 @@ async def advantage_spoll_choker(bot, query):
     if not movies:
         return await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name), show_alert=True)
     else:      
-        await query.answer(f"⚠️⚠️⚠️", show_alert=True)
+        await query.answer(f"𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠..⏳️", show_alert=True)
 
     
     if int(user) != 0 and query.from_user.id != int(user):
@@ -2537,7 +2537,7 @@ async def advantage_spell_chok(client, msg):
     await spell_check_del.delete()
     await msg.delete()
         
-        try:
+    try:
             if settings['auto_delete']:
                 await asyncio.sleep(600)
                 await spell_check_del.delete()
